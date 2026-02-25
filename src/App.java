@@ -148,7 +148,18 @@ public class App {
                             lifeExpectancy = Double.parseDouble(parts[15].trim());
                         }
                         if (birthRate > 0 && lifeExpectancy > 0) {
-                            countries.add(new Data(country, birthRate, lifeExpectancy));
+                            // avoid duplicate countries (data contains several years)
+                            boolean seen = false;
+                            for (Object existing : countries) {
+                                Data d = (Data) existing;
+                                if (d.getCountry().equals(country)) {
+                                    seen = true;
+                                    break;
+                                }
+                            }
+                            if (!seen) {
+                                countries.add(new Data(country, birthRate, lifeExpectancy));
+                            }
                         }
                     } catch (NumberFormatException e) {
                         // skip rows with invalid numbers
