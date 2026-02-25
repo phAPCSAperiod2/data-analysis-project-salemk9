@@ -1,30 +1,75 @@
 /**
- * Represents one row from your dataset.
+ * Represents one row from the World Indicators 2000 dataset.
  *
- * TODO:
- *  - Rename the class to match your dataset (e.g., Pokemon, StateData, CountryStat)
- *  - Add at least 3 private attributes based on your CSV columns
- *  - Write a constructor that initializes all attributes
- *  - Add getter methods for the attributes you need in your analysis
- *  - Override toString() to display the object's data
- *  - Add Javadoc comments for the class and all methods
+ * This class encapsulates data about a country including its birth rate
+ * and life expectancy, allowing for analysis of global demographic indicators.
  */
 public class Data {
 
-    // TODO: Add at least 3 private attributes
-    // Example:
-    // private String name;
-    // private int population;
-    // private double value;
+    /**
+     * The name of the country.
+     */
+    private String country;
 
+    /**
+     * The birth rate of the country (as a decimal, e.g., 0.02 for 2%).
+     */
+    private double birthRate;
 
-    // TODO: Create a constructor that takes all attributes as parameters
+    /**
+     * The life expectancy of the country's female population (in years).
+     */
+    private double lifeExpectancy;
 
+    /**
+     * Constructs a Data object with country information.
+     *
+     * @param country the name of the country
+     * @param birthRate the birth rate of the country (as a decimal)
+     * @param lifeExpectancy the life expectancy for the country (in years)
+     */
+    public Data(String country, double birthRate, double lifeExpectancy) {
+        this.country = country;
+        this.birthRate = birthRate;
+        this.lifeExpectancy = lifeExpectancy;
+    }
 
-    // TODO: Add getters for attributes you need
+    /**
+     * Returns the country name.
+     *
+     * @return the country name
+     */
+    public String getCountry() {
+        return country;
+    }
 
-    // TODO: Add other data analysis methods
+    /**
+     * Returns the birth rate.
+     *
+     * @return the birth rate as a decimal
+     */
+    public double getBirthRate() {
+        return birthRate;
+    }
 
-    // TODO: Override toString() to return a readable representation of your object
+    /**
+     * Returns the life expectancy.
+     *
+     * @return the life expectancy in years
+     */
+    public double getLifeExpectancy() {
+        return lifeExpectancy;
+    }
+
+    /**
+     * Returns a string representation of the Data object.
+     *
+     * @return a formatted string containing country, birth rate, and life expectancy
+     */
+    @Override
+    public String toString() {
+        return String.format("%s - Birth Rate: %.3f, Life Expectancy: %.1f years",
+                country, birthRate, lifeExpectancy);
+    }
 
 }

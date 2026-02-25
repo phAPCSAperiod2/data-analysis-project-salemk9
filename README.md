@@ -70,8 +70,7 @@ UML_Diagram.png (or UML_Diagram.pdf)
 **Source / Link:**  
 
 **What this dataset contains (2–3 sentences):**  
-____________________________________________________________________  
-____________________________________________________________________  
+The dataset contains all the countries of the world and their attributes. This includes their birth rate, business tax rate, CO2 emissions, GDP, etc. 
 
 ---
 
@@ -80,8 +79,9 @@ ____________________________________________________________________
 Your guiding question should be something you can answer using your dataset.
 
 **My guiding question:**  
-____________________________________________________________________  
-____________________________________________________________________  
+  
+What is the correlation between countries and birth rate?
+  
 
 Examples:
 
@@ -126,9 +126,9 @@ In `Main.java`, you must:
 
 | Attribute Name | CSV Column Name | Column Index # | Notes |
 |----------------|------------------|----------------|-------|
-|                |                  |                |       |
-|                |                  |                |       |
-|                |                  |                |       |
+|Country         |Country           |1               |No countries are missing this data.|
+|Birth Rate      |Birth Rate        |3               |Some countries are missing this data.|
+|Life Expectancy |Life Expectancy   |16              |Some countries are missing this data.|
 
 ---
 
@@ -145,8 +145,8 @@ You must write **at least two algorithms** to analyze your dataset.
 
 **Algorithms I will implement:**
 
-1. __________________________________________  
-2. __________________________________________  
+1. Average of Attribute  
+2. Count items above average  
 
 Optional extras:  
 - Sorting  
