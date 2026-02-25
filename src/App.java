@@ -19,44 +19,13 @@ public class App {
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        // Load the CSV file
-        File file = new File("WorldIndicators2000.csv");
+        // Load countries from the CSV file. We are using a plain ArrayList without
+        // generics because the class has not yet covered parameterized types.
+        ArrayList countries = loadCountriesFromCSV("WorldIndicators2000.csv");
 
-        // Create an ArrayList to store Data objects
-        ArrayList<Data> countries = new ArrayList<>();
-
-        // Read and parse the CSV file
-        try (Scanner scanner = new Scanner(file)) {
-            // Skip the header row
-            if (scanner.hasNextLine()) {
-                scanner.nextLine();
-            }
-
-            // Read each data row
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split(",");
-
-                // Ensure we have at least the required columns
-                if (parts.length >= 16) {
-                    try {
-                        String country = parts[0].trim();
-                        double birthRate = parts[2].trim().isEmpty() ? 0 : Double.parseDouble(parts[2].trim());
-                        double lifeExpectancy = parts[15].trim().isEmpty() ? 0 : Double.parseDouble(parts[15].trim());
-
-                        // Only add countries with valid data
-                        if (birthRate > 0 && lifeExpectancy > 0) {
-                            countries.add(new Data(country, birthRate, lifeExpectancy));
-                        }
-                    } catch (NumberFormatException e) {
-                        // Skip rows with invalid numeric data
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: File not found - " + e.getMessage());
-            return;
-        }
+        // Note: file loading has been moved to its own method (loadCountriesFromCSV).  
+        // The code above used to be here, but this main method should stay concise.
+        // (Method implementation lives below.)
 
         // Perform analysis
         System.out.println("=== World Indicators 2000 Data Analysis ===");
@@ -64,33 +33,21 @@ public class App {
         System.out.println("Total countries loaded: " + countries.size());
         System.out.println();
 
-        // Calculate average birth rate
+        // Calculate average birth rate and other statistics using helper methods.
         double averageBirthRate = calculateAverageBirthRate(countries);
         System.out.printf("Average Birth Rate: %.4f%n", averageBirthRate);
         System.out.println();
 
-        // Count and list countries with above-average birth rates
         int aboveAverageCount = countAboveAverageBirthRate(countries, averageBirthRate);
         System.out.println("Countries with above-average birth rates: " + aboveAverageCount);
         System.out.println();
 
-        // Show top 5 countries with highest birth rates
         System.out.println("Top 5 Countries by Birth Rate:");
         printTopCountriesByBirthRate(countries, 5);
         System.out.println();
 
-        // Answer the guiding question
-        System.out.println("=== Answer to Guiding Question ===");
-        System.out.println("Question: What is the correlation between countries and birth rate?");
-        System.out.println();
-        System.out.println("Findings:");
-        System.out.println("- Birth rates vary significantly across countries, ranging from very low");
-        System.out.println("  (developed nations) to quite high (developing nations).");
-        System.out.printf("- The dataset shows an average birth rate of %.4f across %d countries.%n", averageBirthRate, countries.size());
-        System.out.printf("- %d countries (%.1f%%) have birth rates above the average.%n",
-                aboveAverageCount, (aboveAverageCount * 100.0 / countries.size()));
-        System.out.println("- Higher birth rates are generally associated with developing nations,");
-        System.out.println("  while developed nations tend to have lower birth rates.");
+        // Print the answer to the guiding question using its own method
+        printGuidingQuestion(countries, averageBirthRate, aboveAverageCount);
     }
 
     /**
@@ -99,13 +56,14 @@ public class App {
      * @param countries the ArrayList of Data objects representing countries
      * @return the average birth rate
      */
-    public static double calculateAverageBirthRate(ArrayList<Data> countries) {
+    public static double calculateAverageBirthRate(ArrayList countries) {
         if (countries.isEmpty()) {
             return 0;
         }
 
         double sum = 0;
-        for (Data country : countries) {
+        for (Object o : countries) {
+            Data country = (Data) o;
             sum += country.getBirthRate();
         }
 
@@ -119,9 +77,10 @@ public class App {
      * @param average the average birth rate to compare against
      * @return the count of countries with above-average birth rates
      */
-    public static int countAboveAverageBirthRate(ArrayList<Data> countries, double average) {
+    public static int countAboveAverageBirthRate(ArrayList countries, double average) {
         int count = 0;
-        for (Data country : countries) {
+        for (Object o : countries) {
+            Data country = (Data) o;
             if (country.getBirthRate() > average) {
                 count++;
             }
@@ -135,23 +94,91 @@ public class App {
      * @param countries the ArrayList of Data objects representing countries
      * @param topN the number of top countries to display
      */
-    public static void printTopCountriesByBirthRate(ArrayList<Data> countries, int topN) {
+    public static void printTopCountriesByBirthRate(ArrayList countries, int topN) {
         // Simple bubble sort to order countries by birth rate (descending)
-        ArrayList<Data> sorted = new ArrayList<>(countries);
+        ArrayList sorted = new ArrayList(countries);
         for (int i = 0; i < sorted.size(); i++) {
             for (int j = 0; j < sorted.size() - 1 - i; j++) {
-                if (sorted.get(j).getBirthRate() < sorted.get(j + 1).getBirthRate()) {
-                    Data temp = sorted.get(j);
-                    sorted.set(j, sorted.get(j + 1));
-                    sorted.set(j + 1, temp);
+                Data a = (Data) sorted.get(j);
+                Data b = (Data) sorted.get(j + 1);
+                if (a.getBirthRate() < b.getBirthRate()) {
+                    sorted.set(j, b);
+                    sorted.set(j + 1, a);
                 }
             }
         }
 
         // Print top N
         for (int i = 0; i < Math.min(topN, sorted.size()); i++) {
-            System.out.printf("%d. %s (Birth Rate: %.4f)%n", i + 1, sorted.get(i).getCountry(), sorted.get(i).getBirthRate());
+            Data d = (Data) sorted.get(i);
+            System.out.printf("%d. %s (Birth Rate: %.4f)%n", i + 1, d.getCountry(), d.getBirthRate());
         }
+    }
+
+    /**
+     * Reads the CSV file and returns a list of Data objects representing the
+     * valid countries found in the file.  No generics are used so the code
+     * matches the level we've covered in class.
+     *
+     * @param filename the path to the CSV file
+     * @return an ArrayList containing Data objects (possibly empty)
+     */
+    public static ArrayList loadCountriesFromCSV(String filename) {
+        ArrayList countries = new ArrayList();
+        File file = new File(filename);
+
+        try (Scanner scanner = new Scanner(file)) {
+            // skip header
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split(",");
+
+                if (parts.length >= 16) {
+                    try {
+                        String country = parts[0].trim();
+                        double birthRate = 0;
+                        if (!parts[2].trim().isEmpty()) {
+                            birthRate = Double.parseDouble(parts[2].trim());
+                        }
+                        double lifeExpectancy = 0;
+                        if (!parts[15].trim().isEmpty()) {
+                            lifeExpectancy = Double.parseDouble(parts[15].trim());
+                        }
+                        if (birthRate > 0 && lifeExpectancy > 0) {
+                            countries.add(new Data(country, birthRate, lifeExpectancy));
+                        }
+                    } catch (NumberFormatException e) {
+                        // skip rows with invalid numbers
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: File not found - " + e.getMessage());
+        }
+        return countries;
+    }
+
+    /**
+     * Prints the analysis summary that answers the guiding question.
+     */
+    public static void printGuidingQuestion(ArrayList countries,
+                                            double averageBirthRate,
+                                            int aboveAverageCount) {
+        System.out.println("=== Answer to Guiding Question ===");
+        System.out.println("Question: What is the correlation between countries and birth rate?");
+        System.out.println();
+        System.out.println("Findings:");
+        System.out.println("- Birth rates vary significantly across countries, ranging from very low");
+        System.out.println("  (developed nations) to quite high (developing nations).");
+        System.out.printf("- The dataset shows an average birth rate of %.4f across %d countries.%n",
+                averageBirthRate, countries.size());
+        System.out.printf("- %d countries (%.1f%%) have birth rates above the average.%n",
+                aboveAverageCount, (aboveAverageCount * 100.0 / countries.size()));
+        System.out.println("- Higher birth rates are generally associated with developing nations,");
+        System.out.println("  while developed nations tend to have lower birth rates.");
     }
 
 }
