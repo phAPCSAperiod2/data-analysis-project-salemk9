@@ -37,7 +37,7 @@ public class Data {
     }
 
     /**
-     * Returns the country name.
+     * Returns the country's name.
      *
      * @return the country name
      */

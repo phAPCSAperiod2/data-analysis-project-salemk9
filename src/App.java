@@ -176,7 +176,7 @@ public class App {
     }
 
     /**
-     * Prints the analysis summary that answers the guiding question.
+     * Prints the analysis summary that answers my guiding question.
      * 
      * @param countries the list of Data objects representing countries
      * @param averageBirthRate the calculated average birth rate across all countries
