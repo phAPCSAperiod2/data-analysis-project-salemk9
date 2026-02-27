@@ -104,7 +104,7 @@ You must create a class that represents **one row** of your dataset.
 - Any additional analysis/helper methods as needed  
 
 ### ✏ Include your class diagram
-Added in repository
+![alt text](image.png)
 
 ---
 
@@ -165,13 +165,12 @@ After analyzing your objects, print:
 - ✔ A clear answer to your guiding question  
 
 **My findings:**  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
+Birth rates vary signficantly across countries, ranging from very low (developed nations)
+to quite high (developing nations)  
 
 **My answer to the guiding question:**  
-____________________________________________________________________  
-____________________________________________________________________  
+Higher birth rates are generally correlated to to developing nations while developed nations
+tend to have lower birth rates. 
 
 ---
 
@@ -207,7 +206,7 @@ Add a UML diagram showing:
 
 Save as `UML_Diagram.png` or `.pdf` in the repo.
 
-Added in Repository
+![alt text](image-1.png)
 ---
 
 ## 🛡 Step 8 — Data Ethics & Quality Reflection

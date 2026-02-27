@@ -10,22 +10,23 @@ import java.util.Scanner;
  * to represent each country, and analyzes the correlation between countries and their
  * birth rates. It implements algorithms to calculate averages and identify countries
  * with above-average birth rates.
+ * @author Salem Kiar
+ * @collaborator CoPilot
  */
 public class App {
 
     /**
-     * Main method that orchestrates the data analysis.
+     * Main method that executes the data analysis.
      *
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        // Load countries from the CSV file. We are using a plain ArrayList without
-        // generics because the class has not yet covered parameterized types.
+        // Load countries from the CSV file. This method handles file reading and parsing 
+        // returning a list of Data objects.
         ArrayList countries = loadCountriesFromCSV("WorldIndicators2000.csv");
 
         // Note: file loading has been moved to its own method (loadCountriesFromCSV).  
-        // The code above used to be here, but this main method should stay concise.
-        // (Method implementation lives below.)
+        // Method implementation are below the main method to keep it organized.
 
         // Perform analysis
         System.out.println("=== World Indicators 2000 Data Analysis ===");
@@ -117,9 +118,8 @@ public class App {
 
     /**
      * Reads the CSV file and returns a list of Data objects representing the
-     * valid countries found in the file.  No generics are used so the code
-     * matches the level we've covered in class.
-     *
+     * valid countries found in the file.
+     * 
      * @param filename the path to the CSV file
      * @return an ArrayList containing Data objects (possibly empty)
      */
@@ -132,12 +132,14 @@ public class App {
             if (scanner.hasNextLine()) {
                 scanner.nextLine();
             }
+            // Split each line by commas and create Data objects for valid entries
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(",");
 
                 if (parts.length >= 16) {
                     try {
+                        // Extract country name, birth rate, and life expectancy from the appropriate columns
                         String country = parts[0].trim();
                         double birthRate = 0;
                         if (!parts[2].trim().isEmpty()) {
@@ -167,6 +169,7 @@ public class App {
                 }
             }
         } catch (FileNotFoundException e) {
+            // Handle the case where the file is not found.
             System.err.println("Error: File not found - " + e.getMessage());
         }
         return countries;
@@ -174,6 +177,10 @@ public class App {
 
     /**
      * Prints the analysis summary that answers the guiding question.
+     * 
+     * @param countries the list of Data objects representing countries
+     * @param averageBirthRate the calculated average birth rate across all countries
+     * @param aboveAverageCount the count of countries with above-average birth rates
      */
     public static void printGuidingQuestion(ArrayList countries,
                                             double averageBirthRate,

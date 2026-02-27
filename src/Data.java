@@ -3,21 +3,23 @@
  *
  * This class encapsulates data about a country including its birth rate
  * and life expectancy, allowing for analysis of global demographic indicators.
+ * @author Salem Kiar
+ * @collaborator CoPilot
  */
 public class Data {
 
     /**
-     * The name of the country.
+     * Attribute representing name of the country.
      */
     private String country;
 
     /**
-     * The birth rate of the country (as a decimal, e.g., 0.02 for 2%).
+     * Attribute representing birth rate of the country as a decimal
      */
     private double birthRate;
 
     /**
-     * The life expectancy of the country's female population (in years).
+     * Attribute representing life expectancy of the country's population in years.
      */
     private double lifeExpectancy;
 
