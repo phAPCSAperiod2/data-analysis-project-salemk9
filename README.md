@@ -218,10 +218,11 @@ Write a short reflection (3–5 sentences):
 - How trustworthy are your insights?
 
 **My reflection:**  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
-____________________________________________________________________  
+Some countries in the dataset have missing or zero values for key fields like birth rate or life expectancy, which could skew any averages or comparisons.  
+The dataset may also be biased toward nations that report more consistently, potentially underrepresenting smaller or less stable countries.  
+Incomplete or inaccurate data could lead to incorrect conclusions about global trends if those gaps are not handled or acknowledged, ultimately harming the reputation of countries who are misrepresented.
+Because of these issues, the insights drawn should be considered cautiously and verified against additional sources when possible. My insights can be seen as somewhat trustworthy, but should be compared to other potential sources of data to ensure the information in the csv file is correct.
+
 
 ---
 
