@@ -104,7 +104,7 @@ You must create a class that represents **one row** of your dataset.
 - Any additional analysis/helper methods as needed  
 
 ### ✏ Include your class diagram
-![alt text](image.png)
+![alt text](image-6.png)
 
 ---
 
@@ -206,7 +206,7 @@ Add a UML diagram showing:
 
 Save as `UML_Diagram.png` or `.pdf` in the repo.
 
-![alt text](image-1.png)
+![alt text](image-7.png)
 ---
 
 ## 🛡 Step 8 — Data Ethics & Quality Reflection

@@ -6,7 +6,7 @@
  * @author Salem Kiar
  * @collaborator CoPilot
  */
-public class Data {
+public class WorldIndicator2000 {
 
     /**
      * Attribute representing name of the country.
@@ -30,7 +30,7 @@ public class Data {
      * @param birthRate the birth rate of the country (as a decimal)
      * @param lifeExpectancy the life expectancy for the country (in years)
      */
-    public Data(String country, double birthRate, double lifeExpectancy) {
+    public WorldIndicator2000(String country, double birthRate, double lifeExpectancy) {
         this.country = country;
         this.birthRate = birthRate;
         this.lifeExpectancy = lifeExpectancy;
@@ -64,7 +64,7 @@ public class Data {
     }
 
     /**
-     * Returns a string representation of the Data object.
+     * Returns a string representation of the WorldIndicator2000 object.
      *
      * @return a formatted string containing country, birth rate, and life expectancy
      */
